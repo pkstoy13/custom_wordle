@@ -33,10 +33,22 @@ def game():
     user_guess = ""
     while user_guess != chosen_word and user_guesses < NUMBER_OF_GUESSES:
         #print("Try Again")
-        user_guess = input()
+        user_guess = input().lower()
         if user_guess == "xxx":
             return
+        
+
+        '''current_guess = ""
+        for i in range(len(chosen_word) - 1):
+            print(i)
+            if user_guess[i] == chosen_word[i]:
+                current_guess += user_guess[i]
+            else:
+                current_guess += blank_word[i]
+        '''
         user_guesses += 1
+
+        #print(current_guess)
         print("Number of guesses left: ", (NUMBER_OF_GUESSES - user_guesses))
     if user_guess == chosen_word:
         print("You guessed the right word! That being: ", chosen_word)
