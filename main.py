@@ -16,6 +16,13 @@ Things needed to learn:
 -how to pick between a random word each time
 -
 
+Resources Used:
+https://www.index.dev/blog/python-string-comparison-methods
+https://dictionaryapi.dev/
+https://fastapi.tiangolo.com/#opinions
+
+
+
 '''
 NUMBER_OF_GUESSES = 6
 
@@ -23,6 +30,11 @@ def word_picker():
     word_list = {1: "ethereal", 2: "colorful", 3:"obelisk", 4:"willow", 5:"astro", 6:"pink"}
     chosen_word = random.randint(1, len(word_list))
     return word_list[chosen_word]
+
+def check_guess(user_guess, word_to_guess):
+    #while user_guess != word_to_guess:
+     #   if user_guess[i]
+     return
 
 
 def game():
