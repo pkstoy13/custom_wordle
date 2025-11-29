@@ -23,7 +23,7 @@ https://dictionaryapi.dev/
 https://fastapi.tiangolo.com/#opinions
 https://www.freecodecamp.org/news/how-to-build-a-wordle-clone-using-python-and-rich/
 '''
-NUMBER_OF_GUESSES = 6
+NUMBER_OF_GUESSES = 7
 
 def word_picker():
     chosen_word = random.randint(1, len(word_list))
@@ -34,17 +34,21 @@ def check_guess(user_guess, word_to_guess):
     word = ["_"] * len(word_to_guess)
     color = ["⬛"] * len(word_to_guess)
 
-    for i in range(len(user_guess)):
-        if user_guess[i] == word_to_guess[i]:
-            word[i] = user_guess[i]
-            color[i] = "🟩"
-        elif user_guess[i] in word_to_guess:
-            word[i] = "?"
-            color[i] = "🟧"
-        else:
-            word[i] = "X"
-    print(word)
-    print(color)
+
+    if len(user_guess) <= len(word_to_guess):
+        for i in range(len(user_guess)):
+            if user_guess[i] == word_to_guess[i]:
+                word[i] = user_guess[i]
+                color[i] = "🟩"
+            elif user_guess[i] in word_to_guess:
+                word[i] = "?"
+                color[i] = "🟧"
+            else:
+                word[i] = "X"
+        print(word)
+        print(color)
+    else:
+        print("the word you guessed is too long, try again")
     return user_guess
 
 
@@ -56,7 +60,7 @@ def game():
     end_of_game = False
     blank_word = "_" * len(chosen_word)
     #constructed_word = ["_"] * len(chosen_word)
-    print("Welcome to Wordle: You get 6 chances to guess this word", blank_word)
+    print("Welcome to Wordle: You get 7 chances to guess this word", blank_word)
     while not end_of_game:
         user_guess = check_guess(input().lower(), chosen_word)
         print("Number of guesses left: ", (NUMBER_OF_GUESSES - guess_count))
