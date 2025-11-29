@@ -1,4 +1,5 @@
 import random 
+from words import word_list
 
 '''
 Wordle Clone in Python
@@ -20,52 +21,55 @@ Resources Used:
 https://www.index.dev/blog/python-string-comparison-methods
 https://dictionaryapi.dev/
 https://fastapi.tiangolo.com/#opinions
-
-
-
+https://www.freecodecamp.org/news/how-to-build-a-wordle-clone-using-python-and-rich/
 '''
 NUMBER_OF_GUESSES = 6
 
 def word_picker():
-    word_list = {1: "ethereal", 2: "colorful", 3:"obelisk", 4:"willow", 5:"astro", 6:"pink"}
     chosen_word = random.randint(1, len(word_list))
     return word_list[chosen_word]
 
 def check_guess(user_guess, word_to_guess):
-    #while user_guess != word_to_guess:
-     #   if user_guess[i]
-     return
+    #user_guess = input().lower()
+    word = ["_"] * len(word_to_guess)
+    color = ["⬛"] * len(word_to_guess)
+
+    for i in range(len(user_guess)):
+        if user_guess[i] == word_to_guess[i]:
+            word[i] = user_guess[i]
+            color[i] = "🟩"
+        elif user_guess[i] in word_to_guess:
+            word[i] = "?"
+            color[i] = "🟧"
+        else:
+            word[i] = "X"
+    print(word)
+    print(color)
+    return user_guess
+
+
 
 
 def game():
     chosen_word = word_picker()
+    guess_count = 0
+    end_of_game = False
     blank_word = "_" * len(chosen_word)
-    user_guesses = 0
+    #constructed_word = ["_"] * len(chosen_word)
     print("Welcome to Wordle: You get 6 chances to guess this word", blank_word)
-    user_guess = ""
-    while user_guess != chosen_word and user_guesses < NUMBER_OF_GUESSES:
-        #print("Try Again")
-        user_guess = input().lower()
+    while not end_of_game:
+        user_guess = check_guess(input().lower(), chosen_word)
+        print("Number of guesses left: ", (NUMBER_OF_GUESSES - guess_count))
         if user_guess == "xxx":
-            return
-        
-
-        '''current_guess = ""
-        for i in range(len(chosen_word) - 1):
-            print(i)
-            if user_guess[i] == chosen_word[i]:
-                current_guess += user_guess[i]
-            else:
-                current_guess += blank_word[i]
-        '''
-        user_guesses += 1
-
-        #print(current_guess)
-        print("Number of guesses left: ", (NUMBER_OF_GUESSES - user_guesses))
-    if user_guess == chosen_word:
-        print("You guessed the right word! That being: ", chosen_word)
-    else: print("You failed to guess the correct word, try again")
-    
+            print("manual override")
+            end_of_game = True
+        if user_guess == chosen_word: 
+            print("correct")
+            end_of_game = True
+        if user_guess != chosen_word and guess_count == 6:
+            print("incorrect, you ran out of guesses")
+            end_of_game = True
+        guess_count += 1    
 
 def main():
     game()
